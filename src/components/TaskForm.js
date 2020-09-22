@@ -1,12 +1,12 @@
 import React from 'react';
-import DatePicker from 'react-datepicker'
+import { connect } from 'react-redux'
+// import DatePicker from 'react-datepicker'
+import * as actions from '../actions/index'
 
 class TaskForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            task: this.props.task || {}
-        }
+        this.state = {}
     }
     onChange = (e) => {
         const name = e.target.name
@@ -15,8 +15,13 @@ class TaskForm extends React.Component {
             [name]: name === 'piority' ? Number(value) : value
         })
     }
+
+    onSubmit = () => {
+        this.props.addTask(this.state)
+    }
+
     render() {
-        const { id, name, desc, date, piority } = this.state.task
+        const { id, name, desc, date, piority } = this.state
         return (
             <div className='taskForm'>
                 <div className='rowItem'>
@@ -58,11 +63,23 @@ class TaskForm extends React.Component {
                     </select>
                 </div>
                 <div className='btnGroup'>
-                    <div className='btn btn-success'>{this.props.task ? 'Update' : 'Success'}</div>
+                    <div className='btn btn-success' onClick={this.onSubmit}>{this.props.task ? 'Update' : 'Success'}</div>
                 </div>
             </div>
         )
     }
 }
 
-export default TaskForm;
+const mapStateToProps = (state) => {
+    return {}
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        addTask: (task) => {
+            dispatch(actions.addTask(task));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);

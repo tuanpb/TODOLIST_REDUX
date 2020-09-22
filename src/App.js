@@ -4,17 +4,16 @@ import TaskForm from './components/TaskForm'
 import TaskItem from './components/TaskItem';
 import { connect } from "react-redux";
 const uuidv1 = require('uuid/v1')
-// const initialState = [
-//   { id: uuidv1(), name: 'Hoc Reactjs', piority: 0 },
-//   { id: uuidv1(), name: 'Hoc Redux', piority: 1 },
-//   { id: uuidv1(), name: 'Hoc NodeJs', piority: 2 }
-// ]
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       tasks: []
     };
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    console.log(nextProps)
   }
   render() {
     return <div className='wrap'>
@@ -30,7 +29,7 @@ class App extends React.Component {
           <input type='text' placeholder='Search...' />
           <div className='lstItem'>
             {
-              this.state.tasks.length && this.state.tasks.map((task, index) => {
+              this.props.tasks.length && this.props.tasks.map((task, index) => {
                 return <TaskItem key={task.id} index={index} task={task} />
               })
             }
