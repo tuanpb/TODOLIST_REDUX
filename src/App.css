@@ -1,3 +1,7 @@
+:root {
+  --border-color-wrap: #ccc;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -59,8 +63,9 @@
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color-wrap);
   display: flex;
+  box-sizing: border-box;
 }
 
 input,
@@ -73,8 +78,12 @@ select {
   border: 1px solid #b1b1b1;
 }
 
-input[type="text"] {
+input,
+select {
   height: 32px;
+}
+
+input[type="text"] {
   border-radius: 3px;
 }
 
@@ -100,6 +109,8 @@ input[type="checkbox"] {
 .todoList {
   width: 60%;
   position: relative;
+  padding-bottom: 150px;
+  box-sizing: border-box;
 }
 
 .todoList:after {
@@ -110,7 +121,7 @@ input[type="checkbox"] {
   height: 100%;
   top: 0;
   left: 0;
-  background: #ccc;
+  background: var(--border-color-wrap);
 }
 
 .lstItem {
@@ -121,13 +132,27 @@ input[type="checkbox"] {
   margin-bottom: 12px;
 }
 
-.rowItem > p {
+.rowItem.column {
+  justify-content: space-between;
+  display: flex;
+}
+
+.rowItem.column > div {
+  flex: 1;
+}
+
+.rowItem.column div + div {
+  margin-left: 5%;
+}
+
+.rowItem > p,
+.rowItem.column p {
   font-weight: 500;
   margin-bottom: 4px;
 }
 
 .lstItem > .rowItem {
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color-wrap);
   padding: 16px 16px;
   box-sizing: border-box;
   overflow: hidden;
@@ -140,6 +165,7 @@ input[type="checkbox"] {
 .lstItem .rowItem .item .btnGroup {
   margin-left: 8px;
 }
+
 label {
   cursor: pointer;
   user-select: none;
@@ -169,7 +195,7 @@ label p {
   position: absolute;
   width: 200%;
   height: 1px;
-  background: #ccc;
+  background: var(--border-color-wrap);
   top: 0;
   left: -50%;
 }
@@ -181,10 +207,36 @@ label p {
   align-items: center;
   background: #e0e0e0;
   height: 100px;
-  margin-top: 100px;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  bottom: 0;
+  left: 1px;
+  border-top: 1px solid var(--border-color-wrap);
 }
 
 .bulkAction .btn {
   line-height: 36px;
   min-width: 90px;
+}
+
+@media only screen and (max-width: 960px) {
+  .wrap {
+    flex-direction: column;
+  }
+
+  .newTask,
+  .todoList {
+    width: 100%;
+  }
+
+  .newTask {
+    border-bottom: 1px solid var(--border-color-wrap);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    padding: 0 5%;
+  }
 }

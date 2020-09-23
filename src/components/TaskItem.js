@@ -1,5 +1,7 @@
 import React from 'react';
 import TaskForm from '../components/TaskForm'
+import { connect } from 'react-redux'
+import * as actions from '../actions/index'
 
 class TaskItem extends React.Component {
     constructor(props) {
@@ -8,12 +10,17 @@ class TaskItem extends React.Component {
             task: this.props.task
         }
     }
+
+    onRemove = () => {
+        this.props.removeTask([this.state.task.id])
+    }
+
     render() {
         const { id, name } = this.state.task
         return <div className='rowItem'>
             <div className='item'>
                 <label>
-                    <input type="checkbox" value="" />
+                    <input data-id={id} type="checkbox" value="" />
                     <span><p title={name}>{name}</p></span>
                 </label>
                 <div className='btnGroup'>
@@ -22,7 +29,7 @@ class TaskItem extends React.Component {
                         this.forceUpdate()
                     }
                     }>Detail</div>
-                    <div className='btn btn-delete'>Remove</div>
+                    <div className='btn btn-delete' onClick={this.onRemove}>Remove</div>
                 </div>
             </div>
             {
@@ -37,4 +44,16 @@ class TaskItem extends React.Component {
     }
 }
 
-export default TaskItem;
+const mapStateToProps = (state) => {
+    return {}
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        removeTask: (task) => {
+            dispatch(actions.removeTask(task));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskItem);

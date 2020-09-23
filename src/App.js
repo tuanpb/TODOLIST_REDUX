@@ -2,21 +2,48 @@ import React from 'react';
 import './App.css';
 import TaskForm from './components/TaskForm'
 import TaskItem from './components/TaskItem';
-import { connect } from "react-redux";
-const uuidv1 = require('uuid/v1')
+import { connect } from 'react-redux';
+import * as actions from './actions/index'
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      tasks: []
+      search: ''
     };
   }
 
-  componentWillReceiveProps = (nextProps) => {
-    console.log(nextProps)
+  componentDidUpdate = () => {
+    const data = JSON.stringify(this.props.tasks)
+    localStorage.setItem('tasks', data);
   }
+
+  onRemove = () => {
+    if (!this.props.tasks.length) return
+    const lstCheckboxElm = this.dom.querySelectorAll('label input[type="checkbox"]')
+    const lstRemove = []
+    Object.values(lstCheckboxElm).map(elm => {
+      if (elm.checked) lstRemove.push(elm.getAttribute('data-id'))
+    })
+    this.props.removeTask(lstRemove)
+  }
+
+  onSearch = (text) => {
+    this.setState({
+      textFilter: text.toUpperCase()
+    })
+  }
+
   render() {
-    console.log('khai')
+    let tasks = []
+    if (this.state.textFilter) {
+      if (this.props.tasks.length) {
+        this.props.tasks.map(task => {
+          if (task.name.toUpperCase().indexOf(this.state.textFilter) > -1) tasks.push(task)
+        })
+      }
+    } else {
+      tasks = this.props.tasks
+    }
     return <div className='wrap'>
       <section className='newTask'>
         <div className='container'>
@@ -24,15 +51,17 @@ class App extends React.Component {
           <TaskForm />
         </div>
       </section>
-      <section className='todoList'>
+      <section className='todoList' ref={dom => this.dom = dom}>
         <div className='container'>
           <h2 className='title'>To Do List</h2>
-          <input type='text' placeholder='Search...' />
+          <input type='text' placeholder='Search...' onChange={(e) => this.onSearch(e.target.value)} />
           <div className='lstItem'>
             {
-              this.props.tasks.length && this.props.tasks.map((task, index) => {
-                return <TaskItem key={task.id} index={index} task={task} />
-              })
+              tasks.length
+                ? tasks.map((task, index) => {
+                  return <TaskItem key={task.id} index={index} task={task} />
+                })
+                : null
             }
           </div>
         </div>
@@ -40,7 +69,7 @@ class App extends React.Component {
           <div>Bulk Action:</div>
           <div className='btnGroup'>
             <div className='btn btn-info'>Done</div>
-            <div className='btn btn-delete'>Remove</div>
+            <div className='btn btn-delete' onClick={this.onRemove}>Remove</div>
           </div>
         </div>
       </section>
@@ -49,10 +78,17 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps', state)
   return {
     tasks: state.tasks.lstTask
   }
 }
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    removeTask: (task) => {
+      dispatch(actions.removeTask(task));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

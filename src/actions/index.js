@@ -11,3 +11,10 @@ export const addTask = (task) => {
         task
     }
 }
+
+export const removeTask = (lstRemove) => {
+    return {
+        type: types.REMOVE_TASK,
+        lstRemove
+    }
+}
