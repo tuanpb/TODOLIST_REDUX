@@ -46,6 +46,8 @@
 }
 .btn-disabled {
   background: #d8d3d3;
+  color: #333;
+  cursor: not-allowed;
 }
 
 .title {

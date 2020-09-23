@@ -16,6 +16,7 @@ class App extends React.Component {
     console.log(nextProps)
   }
   render() {
+    console.log('khai')
     return <div className='wrap'>
       <section className='newTask'>
         <div className='container'>
@@ -48,8 +49,9 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('mapStateToProps', state)
   return {
-    tasks: state.tasks
+    tasks: state.tasks.lstTask
   }
 }
 

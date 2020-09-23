@@ -6,7 +6,14 @@ import * as actions from '../actions/index'
 class TaskForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        const task = this.props.task || {}
+        this.state = {
+            id: task.id || '',
+            name: task.name || '',
+            desc: task.desc || '',
+            date: task.date || new Date(),
+            piority: task.piority || '',
+        }
     }
     onChange = (e) => {
         const name = e.target.name
@@ -18,6 +25,16 @@ class TaskForm extends React.Component {
 
     onSubmit = () => {
         this.props.addTask(this.state)
+        if (!this.state.id) this.clearData()
+    }
+
+    clearData = () => {
+        this.setState({
+            name: '',
+            desc: '',
+            date: new Date(),
+            piority: '',
+        })
     }
 
     render() {
@@ -36,14 +53,14 @@ class TaskForm extends React.Component {
                 <div className='rowItem'>
                     <p>Description</p>
                     <textarea rows='4'
-                        name='name'
+                        name='desc'
                         value={desc}
                         onChange={this.onChange}
                     />
                 </div>
                 <div className='rowItem'>
                     <p>Duo Date</p>
-                    <input className='' type='date' min={new Date().toISOString()} />
+                    <input className='date' type='date' min={new Date().toISOString()} />
                     {/* <DatePicker
                         selected={new Date()}
                         minDate={new Date()}
@@ -63,7 +80,7 @@ class TaskForm extends React.Component {
                     </select>
                 </div>
                 <div className='btnGroup'>
-                    <div className='btn btn-success' onClick={this.onSubmit}>{this.props.task ? 'Update' : 'Success'}</div>
+                    <div className={`btn btn-success ${this.state.name ? '' : 'btn-disabled'}`} onClick={this.onSubmit}>{this.props.task ? 'Update' : 'Create'}</div>
                 </div>
             </div>
         )
