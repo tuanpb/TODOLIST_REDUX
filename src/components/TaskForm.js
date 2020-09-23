@@ -12,7 +12,7 @@ class TaskForm extends React.Component {
             name: task.name || '',
             desc: task.desc || '',
             date: task.date || new Date(),
-            piority: task.piority || 1,
+            piority: task.piority || 2,
         }
     }
     onChange = (e) => {
