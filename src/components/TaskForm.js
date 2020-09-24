@@ -27,6 +27,7 @@ class TaskForm extends React.Component {
         if (this.disabledButton()) return
         this.props.addTask(this.state)
         if (!this.state.id) this.clearData()
+        if (this.props.onUpdate) this.props.onUpdate()
     }
 
     disabledButton = () => {

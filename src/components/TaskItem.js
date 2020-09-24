@@ -15,6 +15,11 @@ class TaskItem extends React.Component {
         this.props.removeTask([this.state.task.id])
     }
 
+    showDetail = () => {
+        this.isShow = !this.isShow;
+        this.forceUpdate()
+    }
+
     render() {
         const { id, name } = this.state.task
         return <div className='rowItem'>
@@ -24,19 +29,15 @@ class TaskItem extends React.Component {
                     <span><p title={name}>{name}</p></span>
                 </label>
                 <div className='btnGroup'>
-                    <div className='btn btn-primary' onClick={() => {
-                        this.showDetail = !this.showDetail;
-                        this.forceUpdate()
-                    }
-                    }>Detail</div>
+                    <div className='btn btn-primary' onClick={() => this.showDetail()}>Detail</div>
                     <div className='btn btn-delete' onClick={this.onRemove}>Remove</div>
                 </div>
             </div>
             {
-                this.showDetail
+                this.isShow
                     ? <div className='detail'>
                         <div className='line'></div>
-                        <TaskForm task={this.props.task} />
+                        <TaskForm onUpdate={() => this.showDetail()} task={this.props.task} />
                     </div>
                     : null
             }
