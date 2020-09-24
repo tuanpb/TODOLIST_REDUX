@@ -215,6 +215,10 @@ label p {
   min-width: 90px;
 }
 
+.react-datepicker-wrapper{
+  width: 100%;
+}
+
 @media only screen and (max-width: 960px) {
   .wrap {
     flex-direction: column;
