@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import TaskForm from './components/TaskForm'
 import TaskItem from './components/TaskItem';
 import { connect } from 'react-redux';
@@ -44,6 +45,9 @@ class App extends React.Component {
     } else {
       tasks = this.props.tasks
     }
+
+    tasks.sort((a, b) => a.date - b.date)
+
     return <div className='wrap'>
       <section className='newTask'>
         <div className='container'>

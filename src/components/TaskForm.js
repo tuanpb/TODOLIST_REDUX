@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-// import DatePicker from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import * as actions from '../actions/index'
 
 class TaskForm extends React.Component {
@@ -11,7 +11,7 @@ class TaskForm extends React.Component {
             id: task.id || '',
             name: task.name || '',
             desc: task.desc || '',
-            date: task.date || new Date(),
+            date: task.date || + new Date(),
             piority: task.piority || 2,
         }
     }
@@ -44,13 +44,19 @@ class TaskForm extends React.Component {
         this.setState({
             name: '',
             desc: '',
-            date: new Date().toLocaleDateString(),
+            date: +new Date(),
             piority: '',
         })
     }
 
+    setDate = (date) => {
+        this.setState({
+            date: + date
+        })
+    }
+
     render() {
-        const { id, name, desc, date, piority } = this.state
+        const { name, desc, date, piority } = this.state
         return (
             <div className='taskForm'>
                 <div className='rowItem'>
@@ -73,7 +79,12 @@ class TaskForm extends React.Component {
                 <div className='rowItem column'>
                     <div>
                         <p>Duo Date</p>
-                        <input className='date' type='date' />
+                        {/* <input className='date' type='date' /> */}
+                        <DatePicker
+                            minDate={new Date()}
+                            selected={date}
+                            onChange={date => this.setDate(date)}
+                        />
                     </div>
                     <div>
                         <p>Piority</p>

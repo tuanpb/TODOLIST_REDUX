@@ -138,11 +138,7 @@ input[type="checkbox"] {
 }
 
 .rowItem.column > div {
-  flex: 1;
-}
-
-.rowItem.column div + div {
-  margin-left: 5%;
+  width:calc(50% - 3%)
 }
 
 .rowItem > p,
@@ -155,7 +151,6 @@ input[type="checkbox"] {
   border: 1px solid var(--border-color-wrap);
   padding: 16px 16px;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 .lstItem .rowItem .item {
@@ -193,11 +188,11 @@ label p {
 
 .detail .line {
   position: absolute;
-  width: 200%;
+  width: calc(100% + 32px);
   height: 1px;
   background: var(--border-color-wrap);
   top: 0;
-  left: -50%;
+  left: -16px;
 }
 
 .bulkAction {

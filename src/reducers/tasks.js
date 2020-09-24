@@ -30,12 +30,8 @@ const myReducer = (state = initialState, action) => {
                 return { ...state, ...{ lstTask: newList } }
             }
         case types.REMOVE_TASK:
-            newList.map((task, index) => {
-                if (action.lstRemove.indexOf(task.id) > - 1) {
-                    newList.splice(index, 1)
-                }
-            })
-            return { ...state, ...{ lstTask: newList } }
+            const result = newList.filter(task => action.lstRemove.indexOf(task.id) === - 1);
+            return { ...state, ...{ lstTask: result } }
         default:
             return state
     }
