@@ -80,7 +80,6 @@ class TaskForm extends React.Component {
                 <div className='rowItem column'>
                     <div>
                         <p>Duo Date</p>
-                        {/* <input className='date' type='date' /> */}
                         <DatePicker
                             minDate={new Date()}
                             selected={date}

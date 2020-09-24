@@ -35,6 +35,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     let tasks = []
     if (this.state.textFilter) {
       if (this.props.tasks.length) {
@@ -47,7 +48,7 @@ class App extends React.Component {
     }
 
     tasks.sort((a, b) => a.date - b.date)
-
+    console.log(tasks)
     return <div className='wrap'>
       <section className='newTask'>
         <div className='container'>

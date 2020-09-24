@@ -20,6 +20,10 @@ class TaskItem extends React.Component {
         this.forceUpdate()
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({ task: nextProps.task })
+    }
+
     render() {
         const { id, name } = this.state.task
         return <div className='rowItem'>
